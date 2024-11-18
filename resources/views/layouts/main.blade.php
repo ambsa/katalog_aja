@@ -43,6 +43,11 @@
                     @yield('homepage-content')
                 </div>
             @endauth
+
+            <div>
+            @yield('content')
+            </div>
+
         </main>
     </div>
 </body>
