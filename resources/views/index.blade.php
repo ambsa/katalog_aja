@@ -4,17 +4,20 @@
 
 @section('homepage-content')
     <!-- Filter berdasarkan kategori -->
-    <form action="{{ url('/') }}" method="GET" class="mb-6">
-        <select name="category" class="p-2 border rounded-md">
-            <option value="">All Categories</option>
-            @foreach ($categories as $category)
-                <option value="{{ $category->id }}" {{ request()->category == $category->id ? 'selected' : '' }}>
-                    {{ $category->name }}
-                </option>
-            @endforeach
-        </select>
-        <button type="submit" class="px-4 py-2 bg-blue-600 text-white text-sm rounded-md">Filter</button>
-    </form>
+    <form id="filterForm" action="{{ url('/') }}" method="GET" class="mb-6 flex items-center gap-2">
+    <select name="category" id="categoryFilter" class="p-2 border rounded-md">
+        <option value="">All Categories</option>
+        @foreach ($categories as $category)
+            <option value="{{ $category->id }}" {{ request()->category == $category->id ? 'selected' : '' }}>
+                {{ $category->name }}
+            </option>
+        @endforeach
+    </select>
+    <button type="submit" class="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700">
+        Search
+    </button>
+</form>
+
     
     <!-- Produk -->
     <h1 class="text-2xl font-semibold text-gray-800">Our Products</h1>
@@ -41,4 +44,13 @@
         @endforeach
     </div>
     
+@endsection
+
+@section('scripts')
+<script>
+    document.getElementById('categoryFilter').addEventListener('change', function() {
+        // Kirim form secara otomatis kalo kategori dipilih
+        this.form.submit();
+    });
+</script>
 @endsection
