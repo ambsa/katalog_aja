@@ -13,7 +13,7 @@
 <body class="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 min-h-screen flex items-center justify-center font-sans">
 
     <div class="w-full max-w-lg bg-white shadow-lg rounded-xl p-8">
-        <a href="{{ route('login') }}"
+        <a href="{{ route('index') }}"
             class="text-blue-500 hover:text-blue-700 text-sm font-semibold flex items-center mb-4 transition duration-200 ease-in-out transform hover:scale-105 w-10">
             <i class="fa-solid fa-arrow-left mr-2"></i>
         </a>

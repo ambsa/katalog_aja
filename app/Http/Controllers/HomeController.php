@@ -8,16 +8,26 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('category')->get(); // Mengambil produk beserta kategori
-    $categories = Category::all(); // Mengambil semua kategori
+        // Ambil semua kategori
+        $categories = Category::all();
 
-    return view('index', compact('products', 'categories')); // Mengirim data ke view 
+        // Ambil produk berdasarkan filter kategori (jika ada)
+        $query = Product::query();
+    
+        if ($request->has('category') && $request->category != '') {
+            $query->where('category_id', $request->category);
+        }
+    
+        $products = $query->get();
+    
+        return view('index', compact('categories', 'products'));
     }
 
     public function about()
     {
+
         return view('about');
     }
 
@@ -34,10 +44,9 @@ class HomeController extends Controller
     public function show($id)
     {
         // Mencari produk berdasarkan ID
-    $product = Product::with('category')->findOrFail($id);
+        $product = Product::with('category')->findOrFail($id);
 
-    // Mengembalikan tampilan dengan data produk
-    return view('show', compact('product'));
+        // Mengembalikan tampilan dengan data produk
+        return view('show', compact('product'));
     }
 }
-

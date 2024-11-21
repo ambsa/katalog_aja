@@ -4,20 +4,34 @@
 
 @section('content')
 
-@if (session('success'))
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: "{{ session('success') }}",
-            timer: 5000,
-            timerProgressBar: true,
-            showConfirmButton: false
-        });
-    });
-</script>
-@endif
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: "{{ session('success') }}",
+                    timer: 5000,
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
+            });
+        </script>
+    @endif
+    <form id="filterForm" action="{{ route('admin.products.index') }}" method="GET" class="mb-6 flex items-center gap-2">
+        <select name="category" id="categoryFilter" class="p-2 border rounded-md">
+            <option value="">All Categories</option>
+            @foreach ($categories as $category)
+            <option value="{{ $category->id }}" {{ request()->category == $category->id ? 'selected' : '' }}>
+                    {{ $category->name }}
+                </option>
+            @endforeach
+        </select>
+        <button type="submit" class="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700">
+            Search
+        </button>
+    </form>
+
     <div class="flex justify-end mb-4">
         <a href="{{ route('admin.products.create') }}"
             class="bg-blue-600 text-white px-6 py-3 rounded-lg text-sm font-semibold shadow-lg transform transition-all hover:bg-blue-700 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -48,20 +62,21 @@
                         <div class="mt-4 flex justify-between gap-4">
                             <!-- Tombol Edit -->
                             <a href="{{ route('admin.products.edit', $product->id) }}"
-                                class="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 flex-1">
+                                class="flex justify-center items-center px-2 py-2 text-center border-2 border-blue-600 text-blue-600 text-sm rounded-md hover:bg-blue-100 flex-auto">
                                 Edit
                             </a>
+                            <!-- Tombol Detail -->
                             <a href="{{ route('admin.products.show', $product->id) }}"
-                                class="px-4 py-2 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 flex-1">
+                                class="flex justify-center items-center px-2 py-2 text-center border-2 border-green-600 text-green-600 text-sm rounded-md hover:bg-green-100 flex-auto">
                                 Detail
                             </a>
                             <!-- Tombol Hapus -->
-                            <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" class="inline"
-                                id="deleteForm-{{ $product->id }}">
+                            <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST"
+                                id="deleteForm-{{ $product->id }}" class="flex-auto">
                                 @csrf
                                 @method('DELETE')
                                 <button type="button"
-                                    class="px-4 py-2 bg-red-600 text-white text-sm rounded-md hover:bg-red-700 delete-button flex-1">
+                                    class="flex justify-center items-center w-full px-2 py-2 text-center border-2 border-red-600 text-red-600 text-sm rounded-md hover:bg-red-100">
                                     Delete
                                 </button>
                             </form>
@@ -79,23 +94,27 @@
 
     @push('scripts')
         <script>
-            window.addEventListener('load', function() {
+            document.addEventListener('DOMContentLoaded', function() {
+                // Ambil semua tombol delete
                 const deleteButtons = document.querySelectorAll('.delete-button');
+
                 deleteButtons.forEach(button => {
                     button.addEventListener('click', function() {
-                        console.log('Button clicked!'); // Debugging
-                        const form = this.closest('form');
+                        const form = this.closest('form'); // Form terdekat dari tombol yang diklik
 
+                        // SweetAlert2 untuk konfirmasi
                         Swal.fire({
-                            title: 'Are you sure?',
+                            title: "Are you sure?",
                             text: "You won't be able to revert this!",
-                            icon: 'warning',
+                            icon: "warning",
                             showCancelButton: true,
-                            confirmButtonText: 'Yes, delete it!',
-                            cancelButtonText: 'No, cancel!'
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, delete it!"
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                form.submit(); // Submit form jika di-confirm
+                                // Submit form jika dikonfirmasi
+                                form.submit();
                             }
                         });
                     });

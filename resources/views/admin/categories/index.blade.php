@@ -56,11 +56,11 @@
 
                                 <!-- Delete Button -->
                                 <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST"
-                                    class="inline">
+                                    class="inline delete-form">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit"
-                                        class="text-red-600 hover:text-red-800 border border-red-600 hover:border-red-800 px-4 py-2 rounded-md text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-red-500">
+                                    <button type="button"
+                                        class="delete-button text-red-600 hover:text-red-800 border border-red-600 hover:border-red-800 px-4 py-2 rounded-md text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-red-500">
                                         Delete
                                     </button>
                                 </form>
@@ -72,3 +72,34 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ambil semua tombol delete
+            const deleteButtons = document.querySelectorAll('.delete-button');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const form = this.closest('form'); // Form terdekat dari tombol yang diklik
+                    
+                    // SweetAlert2 untuk konfirmasi
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't be able to revert this!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, delete it!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Submit form jika dikonfirmasi
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+@endpush

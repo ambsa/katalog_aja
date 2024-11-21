@@ -18,8 +18,8 @@
                     
                     <!-- Tombol Kembali -->
                     <div class="pt-6">
-                        <a href="{{ route('user.index') }}" class="px-6 py-3 bg-blue-600 text-white text-sm rounded-lg shadow-md hover:bg-blue-700 transform transition duration-200 hover:scale-105">
-                            Back to Product List
+                        <a href="{{ route('index') }}" class="px-6 py-3 bg-blue-600 text-white text-sm rounded-lg shadow-md hover:bg-blue-700 transform transition duration-200 hover:scale-105">
+                            Back
                         </a>
                     </div>
                 </div>

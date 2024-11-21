@@ -10,15 +10,26 @@ use App\Models\Category;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('category')->get();
-        return view('admin.products.index', compact('products'));
+        // Ambil semua kategori
+    $categories = Category::all();
+
+    // Ambil produk berdasarkan filter kategori (jika ada)
+    $query = Product::query();
+
+    if ($request->has('category') && $request->category != '') {
+        $query->where('category_id', $request->category);
+    }
+
+    $products = $query->get();
+
+    return view('admin.products.index', compact('categories', 'products'));
     }
 
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::all(); // Ambil semua kategori
         return view('admin.products.create', compact('categories'));
     }
 
@@ -26,10 +37,11 @@ class ProductController extends Controller
     {
         // Validasi input
         $request->validate([
-            'name' => 'required|unique:products,name',  // Validasi untuk nama produk
-            'category_id' => 'required|exists:categories,id', // Validasi untuk category_id
-            'description' => 'nullable|string',  // Deskripsi produk
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',  // Validasi untuk gambar
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:products,slug',
+            'category_id' => 'required|exists:categories,id',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|max:2048', // Maksimal 2MB
         ]);
 
         // Membuat slug otomatis berdasarkan nama produk
@@ -113,7 +125,5 @@ class ProductController extends Controller
     // Mengembalikan tampilan dengan data produk
     return view('admin.products.show', compact('product'));
 }
-
-
 
 }

@@ -32,13 +32,15 @@ class AuthController extends Controller
 
     // Setelah berhasil login, redirect berdasarkan role
     protected function authenticated(Request $request, $user)
-    {
-        if ($user->role == 1) { // Admin = 1
-            return redirect()->route('admin.index');
-        } elseif ($user->role == 2) { // User = 2
-            return redirect()->route('user.index');
-        }
+{
+    if ($user->role == 1) { // Admin = 1
+        session()->flash('success', 'Anda berhasil login sebagai Admin');
+        return redirect()->route('admin.index');
+    } elseif ($user->role == 2) { // User = 2
+        session()->flash('success', 'Anda berhasil login sebagai User');
+        return redirect()->route('user.index');
     }
+}
 
     // Logout
     public function logout()
