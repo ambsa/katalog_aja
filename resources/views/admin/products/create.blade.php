@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title', 'Create Product')</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>src="{{ assets('js/script.js') }}"</script>
+    {{-- <script>src="{{ assets('js/script.js') }}"</script> --}}
 
 </head>
 <body class="bg-gray-100 h-screen flex items-center justify-center">
