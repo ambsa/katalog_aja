@@ -7,14 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title', 'Create Product')</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
 </head>
 
-<body class="bg-gray-100 h-screen flex items-center justify-center">
-    <div class="container mx-auto px-6 py-6 max-w-lg bg-white rounded-lg shadow-lg">
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="container mx-auto px-4 py-6 max-w-[360px] lg:max-w-[480px] bg-white rounded-lg shadow-lg">
         <!-- Back Button -->
         <a href="{{ route('admin.products.index') }}"
             class="text-blue-500 hover:text-blue-700 text-sm font-semibold flex items-center mb-4 transition duration-200 ease-in-out transform hover:scale-105 w-10">
-            <i class="fa-solid fa-arrow-left mr-2"></i>
+            <i class="fi fi-rr-arrow-small-left text-2xl"></i>
         </a>
         <h1 class="text-2xl font-semibold mb-4 text-gray-800">Create New Product</h1>
 
