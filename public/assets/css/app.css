@@ -1,3 +1,20 @@
 @import url('<script src="https://cdn.tailwindcss.com"></script>');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+/* === UNTUK TOGGLE ADMIN === */
+
+/* Posisi default toggle sidebar */
+/* #toggleSidebar { */
+    /* left: 1rem; Posisi awal di layar kecil */
+    /* transition: left 0.3s ease-in-out; */
+    /* z-index: 1000; */
+/* } */
+
+/* Saat sidebar terbuka, tombol toggle berada di kanan tulisan Admin Panel */
+/* .sidebar-open #toggleSidebar { */
+    /* left: 16rem; Sesuaikan dengan lebar sidebar */
+/* } */
+
+/* === END TOGGLE ADMIN === */
+

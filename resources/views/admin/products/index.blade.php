@@ -1,8 +1,9 @@
-@extends('layouts.products')
+@extends('layouts.main')
 
 @section('title', 'Products')
 
 @section('content')
+
 
     @if (session('success'))
         <script>
@@ -22,7 +23,7 @@
         <select name="category" id="categoryFilter" class="p-2 border rounded-md">
             <option value="">All Categories</option>
             @foreach ($categories as $category)
-            <option value="{{ $category->id }}" {{ request()->category == $category->id ? 'selected' : '' }}>
+                <option value="{{ $category->id }}" {{ request()->category == $category->id ? 'selected' : '' }}>
                     {{ $category->name }}
                 </option>
             @endforeach
@@ -34,7 +35,7 @@
 
     <div class="flex justify-end mb-4">
         <a href="{{ route('admin.products.create') }}"
-            class="bg-blue-600 text-white px-6 py-3 rounded-lg text-sm font-semibold shadow-lg transform transition-all hover:bg-blue-700 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            class="bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-semibold shadow-lg transform transition-all hover:bg-blue-700 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <i class="fa-solid fa-plus mr-2"></i>Add Product
         </a>
     </div>
@@ -76,7 +77,7 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="button"
-                                    class="flex justify-center items-center w-full px-2 py-2 text-center border-2 border-red-600 text-red-600 text-sm rounded-md hover:bg-red-100">
+                                    class="delete-button flex justify-center items-center w-full px-2 py-2 text-center border-2 border-red-600 text-red-600 text-sm rounded-md hover:bg-red-100">
                                     Delete
                                 </button>
                             </form>
@@ -92,29 +93,38 @@
 
     @endsection
 
-    @push('scripts')
+    @push('script')
         <script>
+            // Fungsi untuk membuka atau menutup dropdown
+            function toggleDropdown() {
+                var dropdown = document.getElementById('dropdown-menu');
+                dropdown.classList.toggle('hidden');
+            }
+
+            // Menutup dropdown jika pengguna mengklik di luar menu
+            window.addEventListener('click', function(event) {
+                var dropdown = document.getElementById('dropdown-menu');
+                var button = document.querySelector('button[onclick="toggleDropdown()"]');
+                if (!dropdown.contains(event.target) && !button.contains(event.target)) {
+                    dropdown.classList.add('hidden');
+                }
+            });
+
             document.addEventListener('DOMContentLoaded', function() {
-                // Ambil semua tombol delete
-                const deleteButtons = document.querySelectorAll('.delete-button');
-
-                deleteButtons.forEach(button => {
+                document.querySelectorAll('.delete-button').forEach(function(button) {
                     button.addEventListener('click', function() {
-                        const form = this.closest('form'); // Form terdekat dari tombol yang diklik
-
-                        // SweetAlert2 untuk konfirmasi
+                        const form = this.closest('form'); // Form terkait tombol delete
                         Swal.fire({
                             title: "Are you sure?",
-                            text: "You won't be able to revert this!",
-                            icon: "warning",
-                            showCancelButton: true,
-                            confirmButtonColor: "#3085d6",
-                            cancelButtonColor: "#d33",
-                            confirmButtonText: "Yes, delete it!"
+                        text: "You won't be able to revert this!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, delete it!"
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                // Submit form jika dikonfirmasi
-                                form.submit();
+                                form.submit(); // Submit form jika dikonfirmasi
                             }
                         });
                     });

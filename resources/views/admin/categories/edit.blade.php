@@ -1,6 +1,14 @@
-@extends('layouts.category')
-
-@section('content')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@yield('Edit', 'Category')</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a329084b4e.js" crossorigin="anonymous"></script>
+</head>
+<body class="min-h-screen bg-gray-100 flex items-center justify-center">
     <div class="container mx-auto px-6 py-8 max-w-lg bg-white rounded-lg shadow-lg">
         <a href="{{ route('admin.categories.index') }}"
             class="text-blue-500 hover:text-blue-700 text-sm font-semibold flex items-center transition duration-200 ease-in-out transform hover:scale-105 w-10">
@@ -38,4 +46,5 @@
                 Category</button>
         </form>
     </div>
-@endsection
+</body>
+</html>
